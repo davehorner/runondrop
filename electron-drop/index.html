@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropped Files</title>
+</head>
+<body>
+  dropped files
+    <ul id="dropped-files-list"></ul>
+     <div id="commands-container"></div>
+
+    <script src="./render.js"></script>
+    <script>
+        const droppedFilesList = document.getElementById('dropped-files-list');
+
+        // Listen for messages from the main process
+        //const { ipcRenderer } = require('electron');
+        ipcRenderer.on('update-dropped-files', (event, paths) => {
+            // Clear the existing list
+            droppedFilesList.innerHTML = '';
+
+            // Add each dropped file path to the list
+            paths.forEach((path) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = path;
+                droppedFilesList.appendChild(listItem);
+            });
+        });
+    </script>
+</body>
+</html>
+
